@@ -5,7 +5,7 @@ import BYCONTRACT from "../../../../assets/icons/BYCONTRACT.svg";
 import { ConnexionForm } from "./ConnexionForm";
 import { motion } from "framer-motion";
 
-export const HomePage = () => {
+export const LoginPage = () => {
   return (
     <Container>
       <ContainerWrapper>
