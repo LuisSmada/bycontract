@@ -41,7 +41,6 @@ const IllustrationContainer = styled.div`
 const FormContainer = styled.div`
   grid-row: 1;
   grid-column: 2/3;
-  background-color: green;
 `;
 
 const ImageContainer = styled.div`
