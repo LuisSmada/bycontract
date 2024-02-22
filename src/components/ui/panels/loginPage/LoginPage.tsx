@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import HomeImage from "../../../../assets/illustrations/HomeMeeting.png";
+import HomeImage from "../../../../assets/illustrations/homemeeting.png";
 import BYCONTRACT from "../../../../assets/icons/BYCONTRACT.svg";
 import { ConnexionForm } from "./ConnexionForm";
 import { motion } from "framer-motion";
