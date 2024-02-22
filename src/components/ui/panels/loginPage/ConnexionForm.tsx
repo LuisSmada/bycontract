@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Logo from "../../../../assets/icons/BYC.svg";
+import { Link } from "react-router-dom";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");
@@ -18,7 +19,7 @@ export const ConnexionForm = () => {
           <IndicationConnexion>
             Connectez-vous pour continuer
           </IndicationConnexion>
-          <Label>Email ou nom d utilisateur</Label>
+          <Label>Email ou nom d'utilisateur</Label>
           <InputForm
             type="text"
             value={userLogin}
@@ -39,8 +40,10 @@ export const ConnexionForm = () => {
             />
             <Label>Se souvenir de moi</Label>
           </RememberMeWrapper>
-          <Button>Connexion</Button>
-          <ButtonLanguage>Francais</ButtonLanguage>
+          <Link to="/dashboard">
+            <Button>Connexion</Button>
+          </Link>
+          <ButtonLanguage>Français</ButtonLanguage>
         </FormContainer>
       </ContainerWrapper>
     </Container>
@@ -86,13 +89,13 @@ const TitleHome = styled.div`
 const IndicationConnexion = styled.div`
   font-size: ${(props) => props.theme.textSize.normalText};
   color: ${(props) => props.theme.colors.disabled};
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 20px;
 `;
 
 const Label = styled.div`
   font-size: ${(props) => props.theme.textSize.normalText};
-  font-weight: 600;
+  font-weight: 500;
   color: ${(props) => props.theme.colors.mainText};
   margin-bottom: 0.3rem;
 `;
@@ -136,7 +139,7 @@ const Button = styled.button`
   border: none;
   color: white;
   font-size: ${(props) => props.theme.textSize.normalText};
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 `;
 
