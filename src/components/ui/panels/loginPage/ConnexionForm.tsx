@@ -2,11 +2,24 @@ import { useState } from "react";
 import styled from "styled-components";
 import Logo from "../../../../assets/icons/BYC.svg";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import cookies from "js-cookie";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const currentLng = cookies.get("i18next");
+
+  const { t, i18n } = useTranslation();
+
+  const handleChangeLanguage = () => {
+    if (currentLng === "en") {
+      i18n.changeLanguage("fr");
+    } else {
+      i18n.changeLanguage("en");
+    }
+  };
 
   return (
     <Container>
@@ -15,17 +28,15 @@ export const ConnexionForm = () => {
           <LogoImage src={Logo} alt="Logo Miniaturized" />
         </LogoWrapper>
         <FormContainer>
-          <TitleHome>Bienvenue sur la plateforme BYCONTRACT</TitleHome>
-          <IndicationConnexion>
-            Connectez-vous pour continuer
-          </IndicationConnexion>
-          <Label>Email ou nom d'utilisateur</Label>
+          <TitleHome>{t("#WelcomeOnByContract")}</TitleHome>
+          <IndicationConnexion>{t("#LogToContinue")}</IndicationConnexion>
+          <Label>{t("#EmailOrUsername")}</Label>
           <InputForm
             type="text"
             value={userLogin}
             onChange={(e) => setUserLogin(e.target.value)}
           />
-          <Label>Mot de passe</Label>
+          <Label>{t("#Password")}</Label>
           <InputForm
             type="password"
             value={userPassword}
@@ -38,12 +49,14 @@ export const ConnexionForm = () => {
               onChange={(e) => setIsChecked(e.target.checked)}
               $isChecked={isChecked}
             />
-            <Label>Se souvenir de moi</Label>
+            <Label>{t("#RememberMe")}</Label>
           </RememberMeWrapper>
-          <Link to="/dashboard">
-            <Button>Connexion</Button>
+          <Link to="/dashboard/tab:mywall">
+            <Button>{t("#Login")}</Button>
           </Link>
-          <ButtonLanguage>Français</ButtonLanguage>
+          <ButtonLanguage onClick={handleChangeLanguage}>
+            {currentLng === "fr" ? t("#English") : t("#French")}
+          </ButtonLanguage>
         </FormContainer>
       </ContainerWrapper>
     </Container>
@@ -147,17 +160,19 @@ const ButtonLanguage = styled.button`
   width: 6rem;
   height: 30px;
   background-color: white;
-  border: ${(props) => `1px solid ${props.theme.colors.borderField}`};
+  /* border: ${(props) => `1px solid ${props.theme.colors.borderField}`}; */
   border-radius: 5px;
-  color: ${(props) => props.theme.colors.disabled};
+  /* color: ${(props) => props.theme.colors.disabled}; */
   font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 30px;
   cursor: pointer;
-  &:focus {
+  border: ${(props) => `1px solid ${props.theme.colors.main}`};
+  color: ${(props) => props.theme.colors.main};
+  /* &:focus {
     border: ${(props) => `1px solid ${props.theme.colors.main}`};
     color: ${(props) => props.theme.colors.main};
-  }
+  } */
 `;

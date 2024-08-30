@@ -1,19 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-interface IGlobalTheme {
-  colors: {
-    main: string;
-    disabled: string;
-    mainText: string;
-    borderField: string;
-  };
-  textSize: {
-    title: string;
-    normalText: string;
-  };
-}
-
-export const globalTheme: DefaultTheme | IGlobalTheme = {
+export const COLORS_BYCONTRACT = {
   colors: {
     main: "#7440EF",
     disabled: "#B1B1B1",
@@ -22,6 +9,6 @@ export const globalTheme: DefaultTheme | IGlobalTheme = {
   },
   textSize: {
     title: "20px",
-    normalText: "15px",
+    normalText: "14px",
   },
-};
+} as const satisfies DefaultTheme;
