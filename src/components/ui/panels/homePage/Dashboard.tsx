@@ -3,7 +3,7 @@ import { IDashboardTabsListType } from "../../../../types/DashboardTypes";
 import { DashboardTabs } from "./tabNavigation/DashboardTabs";
 import BYCWhiteLogo from "../../../../assets/icons/BYC_white.svg";
 import { useState } from "react";
-import { Badge } from "../../../../utils/Badge";
+import { Badge } from "../../common/Badge";
 
 export const dashboardTabsList: IDashboardTabsListType[] = [
   {
