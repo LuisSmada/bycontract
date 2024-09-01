@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import HomeImage from "../../../../assets/illustrations/homemeeting.png";
-import BYCONTRACT from "../../../../assets/icons/BYCONTRACT.svg";
 import { ConnexionForm } from "./ConnexionForm";
 import { motion } from "framer-motion";
+import { BYCONTRACTLogo } from "../../common/SVGIcons";
 
 export const LoginPage = () => {
   return (
@@ -11,7 +11,7 @@ export const LoginPage = () => {
       <ContainerWrapper>
         <IllustrationContainer>
           <LogoContainer>
-            <NormalLogo src={BYCONTRACT} alt="Normal Logo" />
+            <NormalLogo src={BYCONTRACTLogo} alt="Normal Logo" />
           </LogoContainer>
           <ImageContainer>
             <Image src={HomeImage} alt="HomeImage" />

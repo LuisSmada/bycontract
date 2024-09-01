@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { IDashboardTabsListType } from "../../../../types/DashboardTypes";
 import { DashboardTabs } from "./tabNavigation/DashboardTabs";
-import BYCWhiteLogo from "../../../../assets/icons/BYC_white.svg";
-import { useState } from "react";
 import { Badge } from "../../common/Badge";
+import { BYCWhiteLogo } from "../../common/SVGIcons";
 
 export const dashboardTabsList: IDashboardTabsListType[] = [
   {
@@ -21,7 +20,8 @@ export const dashboardTabsList: IDashboardTabsListType[] = [
 ];
 
 export const Dashboard = () => {
-  const [defaultUserName, setDefaultUserName] = useState<string>("Adams AYO");
+  // const [defaultUserName, setDefaultUserName] = useState<string>("Adams AYO");
+  const defaultUserName = "Adams AYO";
   return (
     <Container>
       <HeaderBar>

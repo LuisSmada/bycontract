@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
-import Logo from "../../../../assets/icons/BYC.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import cookies from "js-cookie";
+import { BYCLogo } from "../../common/SVGIcons";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");
@@ -25,7 +25,7 @@ export const ConnexionForm = () => {
     <Container>
       <ContainerWrapper>
         <LogoWrapper>
-          <LogoImage src={Logo} alt="Logo Miniaturized" />
+          <LogoImage src={BYCLogo} alt="Logo Miniaturized" />
         </LogoWrapper>
         <FormContainer>
           <TitleHome>{t("#WelcomeOnByContract")}</TitleHome>

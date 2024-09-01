@@ -6,6 +6,7 @@ export const COLORS_BYCONTRACT = {
     disabled: "#B1B1B1",
     mainText: "#3D3D3D",
     borderField: "#E2E4E3",
+    white: "#ffffff",
   },
   textSize: {
     title: "20px",

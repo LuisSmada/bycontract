@@ -1,3 +1,9 @@
+import { DocumentContextBar } from "../../../common/contextBars/ContextBars";
+
 export const MyDocuments = () => {
-  return <div>MyFiles</div>;
+  return (
+    <>
+      <DocumentContextBar />
+    </>
+  );
 };

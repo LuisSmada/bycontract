@@ -12,6 +12,11 @@ export const DashboardTabs = ({ tabList }: IDashboardTabsProps) => {
   const [activeTab, setActiveTab] = useState<IDashboardTabsListType>(
     tabList[0]
   );
+
+  //! useSessionStorage is a temporary solution to store the current state in the locale storage
+  //! It is a good method to save the state when i refresh the app
+
+  // const [activeTab, setActiveTab] = useSessionStorage("tabActive", tabList[0]);
   const isActiveTab = (tab: IDashboardTabsListType) => {
     return activeTab.path === tab.path;
   };
