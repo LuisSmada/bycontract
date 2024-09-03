@@ -50,7 +50,7 @@ const ButtonSelection = styled.button`
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 12px; //Mettre ca sous forme de variable
   padding: 0 10px;
 `;
 
