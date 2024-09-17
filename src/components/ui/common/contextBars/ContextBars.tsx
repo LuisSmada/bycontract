@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { styled } from "styled-components";
 import { AddIcon } from "../SVGIcons";
@@ -10,7 +9,8 @@ export const DocumentContextBar = () => {
       <Wrapper>
         <Title>{t("#MyDocuments")}</Title>
         <ButtonSelection>
-          {t("#New")} <AddIconStyle />
+          {t("#New")}
+          <AddIconStyle />
         </ButtonSelection>
       </Wrapper>
     </Container>
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-weight: bold;
   font-size: ${(props) => props.theme.textSize.normalText};
-  color: ${(props) => props.theme.textSize.mainText};
+  color: ${(props) => props.theme.textSize.normalText};
 `;
 
 const ButtonSelection = styled.button`

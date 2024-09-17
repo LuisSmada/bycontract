@@ -1,17 +1,27 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import cookies from "js-cookie";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { openNotification } from "../../../../utils/notifications";
+import { OutlinedButton, PrimaryButton } from "../../common/Buttons";
+import { InputCheckbox, InputForm } from "../../common/Inputs";
 import { BYCLogo } from "../../common/SVGIcons";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
+  // const [userCredentials, setUserCredentials] = useState({ userLogin: "", userPassword: ""})
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const currentLng = cookies.get("i18next");
+  const navigate = useNavigate();
 
   const { t, i18n } = useTranslation();
+
+  const defaultCredentials = {
+    login: "root",
+    pwd: "root",
+  };
 
   const handleChangeLanguage = () => {
     if (currentLng === "en") {
@@ -21,13 +31,39 @@ export const ConnexionForm = () => {
     }
   };
 
+  const handleLogin = () => {
+    if (!userLogin || !userPassword) {
+      openNotification({
+        type: "error",
+        message: t("#CompleteFields"),
+        description: t("#YouMustCompleteAllTheFields"),
+      });
+    } else if (
+      userLogin !== defaultCredentials.login ||
+      userPassword !== defaultCredentials.pwd
+    ) {
+      openNotification({
+        type: "error",
+        message: t("#InvalidFields"),
+        description: t("#OneOrManyFieldsAreInvalids"),
+      });
+    } else {
+      // openNotification({
+      //   type: "success",
+      //   message: "Login sucess",
+      //   description: "Login success",
+      // });
+      navigate("/dashboard/tab:mywall");
+    }
+  };
+
   return (
     <Container>
       <ContainerWrapper>
         <LogoWrapper>
           <LogoImage src={BYCLogo} alt="Logo Miniaturized" />
         </LogoWrapper>
-        <FormContainer>
+        <FormContainer data-testid="form-login-container">
           <TitleHome>{t("#WelcomeOnByContract")}</TitleHome>
           <IndicationConnexion>{t("#LogToContinue")}</IndicationConnexion>
           <Label>{t("#EmailOrUsername")}</Label>
@@ -43,20 +79,18 @@ export const ConnexionForm = () => {
             onChange={(e) => setUserPassword(e.target.value)}
           />
           <RememberMeWrapper>
-            <CheckBox
-              type="checkbox"
+            <InputCheckbox
               checked={isChecked}
               onChange={(e) => setIsChecked(e.target.checked)}
-              $isChecked={isChecked}
             />
             <Label>{t("#RememberMe")}</Label>
           </RememberMeWrapper>
-          <Link to="/dashboard/tab:mywall">
-            <Button>{t("#Login")}</Button>
-          </Link>
-          <ButtonLanguage onClick={handleChangeLanguage}>
+          <PrimaryButton width="410px" onClick={handleLogin}>
+            {t("#Login")}
+          </PrimaryButton>
+          <OutlinedButton width={"6rem"} onClick={handleChangeLanguage}>
             {currentLng === "fr" ? t("#English") : t("#French")}
-          </ButtonLanguage>
+          </OutlinedButton>
         </FormContainer>
       </ContainerWrapper>
     </Container>
@@ -86,7 +120,7 @@ const LogoImage = styled.img`
   width: 100px;
 `;
 
-const FormContainer = styled.div`
+const FormContainer = styled.form`
   width: 100%;
   height: 100%;
   display: flex;
@@ -120,18 +154,6 @@ const RememberMeWrapper = styled.div`
   gap: 0.5em;
 `;
 
-const InputForm = styled.input`
-  width: 402px;
-  height: 30px;
-  border: ${(props) => `1px solid ${props.theme.colors.disabled}`};
-  border-radius: 5px;
-  margin-bottom: 10px;
-  outline: none;
-  &:focus {
-    border: ${(props) => `1px solid ${props.theme.colors.main}`};
-  }
-`;
-
 interface ICheckBox {
   $isChecked: boolean;
 }
@@ -142,37 +164,4 @@ const CheckBox = styled.input<ICheckBox>`
   width: 15px;
   height: 15px;
   background-color: ${(props) => props.$isChecked && `#000`};
-`;
-
-const Button = styled.button`
-  width: 410px;
-  height: 38px;
-  background-color: ${(props) => props.theme.colors.main};
-  border-radius: 5px;
-  border: none;
-  color: white;
-  font-size: ${(props) => props.theme.textSize.normalText};
-  font-weight: 500;
-  cursor: pointer;
-`;
-
-const ButtonLanguage = styled.button`
-  width: 6rem;
-  height: 30px;
-  background-color: white;
-  /* border: ${(props) => `1px solid ${props.theme.colors.borderField}`}; */
-  border-radius: 5px;
-  /* color: ${(props) => props.theme.colors.disabled}; */
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  cursor: pointer;
-  border: ${(props) => `1px solid ${props.theme.colors.main}`};
-  color: ${(props) => props.theme.colors.main};
-  /* &:focus {
-    border: ${(props) => `1px solid ${props.theme.colors.main}`};
-    color: ${(props) => props.theme.colors.main};
-  } */
 `;

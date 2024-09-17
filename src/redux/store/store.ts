@@ -4,5 +4,5 @@ export const store = configureStore({
   reducer: {},
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type TByContractStore = ReturnType<typeof store.getState>;
+export type StoreTypeDispatch = typeof store.dispatch;

@@ -1,14 +1,18 @@
 {
+  "#CompleteFields": "Compléter les champs",
   "#EmailOrUsername": "Email ou nom d'utilisateur",
   "#English": "Anglais",
   "#French": "Français",
+  "#InvalidFields": "Champs invalides",
   "#Login": "Connexion",
   "#LogToContinue": "Se connecter pour continuer",
   "#MyDocuments": "Mes documents",
   "#MyWall": "Mon mur",
   "#New": "Nouveau",
+  "#OneOrManyFieldsAreInvalids": "Un ou plusiers champs sont invalides",
   "#Password": "Mot de passe",
   "#RememberMe": "Se souvenir de moi",
   "#Statistics": "Statistiques",
-  "#WelcomeOnByContract": "Bienvenue dans BYCONTRACT Platform"
+  "#WelcomeOnByContract": "Bienvenue dans BYCONTRACT Platform",
+  "#YouMustCompleteAllTheFields": "You devez compléter tous les champs"
 }

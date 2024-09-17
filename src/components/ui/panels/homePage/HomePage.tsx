@@ -1,6 +1,5 @@
-import React from "react";
-import { Dashboard } from "./Dashboard";
 import styled from "styled-components";
+import { Dashboard } from "./Dashboard";
 
 export const HomePage = () => {
   return (

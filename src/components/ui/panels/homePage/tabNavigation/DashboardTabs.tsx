@@ -26,11 +26,12 @@ export const DashboardTabs = ({ tabList }: IDashboardTabsProps) => {
   return (
     <Container>
       <TabContainer>
-        {tabList.map((tab) => (
+        {tabList.map((tab, idx) => (
           <Tab
+            key={idx}
             to={tab.path}
             onClick={() => setActiveTab(tab)}
-            isActive={isActiveTab(tab)}
+            $isActive={isActiveTab(tab)}
           >
             {t(`${tab.title}`)}
           </Tab>
@@ -57,7 +58,7 @@ const TabContainer = styled.div`
 `;
 
 interface ITab {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
 const Tab = styled(Link)<ITab>`
@@ -71,16 +72,16 @@ const Tab = styled(Link)<ITab>`
   padding: 0 20px;
   font-size: ${(props) => props.theme.textSize.normalText};
   color: ${(props) =>
-    props.isActive ? "#000" : `${props.theme.colors.mainText}`};
+    props.$isActive ? "#000" : `${props.theme.colors.mainText}`};
   border-bottom: ${(props) =>
-    props.isActive
+    props.$isActive
       ? `3px solid ${props.theme.colors.main}`
       : `3px solid transparent`};
   transition: border-color 0.3s ease;
-  cursor: ${(props) => (props.isActive ? `default` : `pointer`)};
+  cursor: ${(props) => (props.$isActive ? `default` : `pointer`)};
   &:hover {
     border-color: ${(props) =>
-      props.isActive ? `none` : props.theme.colors.disabled};
+      props.$isActive ? `none` : props.theme.colors.disabled};
   }
 `;
 

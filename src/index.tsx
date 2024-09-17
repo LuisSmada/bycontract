@@ -1,20 +1,21 @@
+import i18next from "i18next";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { ThemeProvider } from "styled-components";
-import { COLORS_BYCONTRACT } from "./theme/globalTheme";
-import FontStyles from "./theme/fontStyles";
 import { Provider } from "react-redux";
+import { type DefaultTheme, ThemeProvider } from "styled-components";
+import App from "./App";
+import "./index.css";
 import { store } from "./redux/store/store";
-import i18next from "i18next";
+import reportWebVitals from "./reportWebVitals";
+import FontStyles from "./theme/fontStyles";
+import { COLORS_BYCONTRACT, globalThemeAntd } from "./theme/globalTheme";
 
-import global_fr from "./nls/translate/LanguageFrame_fr.json";
-import global_en from "./nls/translate/LanguageFrame_en.json";
-import { I18nextProvider, initReactI18next } from "react-i18next";
+import { ConfigProvider } from "antd";
 import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
+import { I18nextProvider, initReactI18next } from "react-i18next";
+import global_en from "./nls/translate/LanguageFrame_en.json";
+import global_fr from "./nls/translate/LanguageFrame_fr.json";
 
 i18next
   .use(initReactI18next)
@@ -45,16 +46,24 @@ i18next
     },
   });
 
+const waveState = {
+  disabled: false,
+};
+
+console.log(COLORS_BYCONTRACT);
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={COLORS_BYCONTRACT}>
-        <FontStyles />
+      <ThemeProvider theme={COLORS_BYCONTRACT as DefaultTheme}>
         <I18nextProvider i18n={i18next}>
-          <App />
+          <ConfigProvider wave={waveState} theme={globalThemeAntd}>
+            <FontStyles />
+            <App />
+          </ConfigProvider>
         </I18nextProvider>
       </ThemeProvider>
     </Provider>

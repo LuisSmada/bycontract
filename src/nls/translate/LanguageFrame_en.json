@@ -1,14 +1,18 @@
 {
+  "#CompleteFields": "Complete fields",
   "#EmailOrUsername": "Email or username",
   "#English": "English",
   "#French": "French",
+  "#InvalidFields": "Invalids fields",
   "#Login": "Login",
   "#LogToContinue": "Sign in to continue",
   "#MyDocuments": "My documents",
   "#MyWall": "My Wall",
   "#New": "New",
+  "#OneOrManyFieldsAreInvalids": "One or many fields are invalids",
   "#Password": "Password",
   "#RememberMe": "Remember me",
   "#Statistics": "Statistics",
-  "#WelcomeOnByContract": "Welcome to the BYCONTRACT Platform"
+  "#WelcomeOnByContract": "Welcome to the BYCONTRACT Platform",
+  "#YouMustCompleteAllTheFields": "You must complete all the fields"
 }

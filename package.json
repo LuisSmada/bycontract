@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-react": "^7.24.7",
     "@emotion/react": "^11.11.3",
     "@floating-ui/react": "^0.26.9",
     "@reduxjs/toolkit": "^2.2.0",
@@ -18,17 +21,22 @@
     "react-redux": "^9.1.0",
     "react-router": "^6.22.1",
     "react-router-dom": "^6.22.0",
-    "react-scripts": "^5.0.1",
     "redux": "^5.0.1",
     "styled-components": "^6.1.8",
     "typescript": "^5.3.3",
+    "vite": "^5.4.5",
     "web-vitals": "^3.5.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "_startViteDev": "vite --host",
+    "build": "run-s build",
+    "coverage": "vitest run --coverage",
+    "eject": "react-scripts eject",
+    "start": "run-s -s _startViteDev",
+    "storybook:build": "storybook build --quiet -o build/sb",
+    "storybook": "storybook dev",
+    "test:ui": "vitest --ui",
+    "test": "vitest"
   },
   "eslintConfig": {
     "extends": [
@@ -49,8 +57,17 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.1",
+    "@storybook/addon-actions": "^8.3.0",
+    "@storybook/addon-controls": "^8.3.0",
+    "@storybook/addon-knobs": "^8.0.1",
+    "@storybook/addon-viewport": "^8.3.0",
+    "@storybook/react": "^8.3.0",
+    "@storybook/react-vite": "^8.3.0",
+    "@storybook/theming": "^8.3.0",
+    "@swc/plugin-styled-components": "^3.0.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
     "@types/js-cookie": "^3.0.6",
@@ -61,13 +78,21 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.34",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitest/ui": "^2.1.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-typescript": "^0.14.0",
+    "jsdom": "^25.0.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
     "redux-devtools": "^3.7.0",
+    "storybook": "^8.3.0",
     "usehooks-ts": "^3.1.0",
+    "vite-plugin-svgr": "^4.2.0",
+    "vitest": "^2.1.1",
     "yarn-upgrade-all": "^0.7.2"
   }
 }
