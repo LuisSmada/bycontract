@@ -7,27 +7,40 @@ import { openNotification } from "../../../../utils/notifications";
 import { OutlinedButton, PrimaryButton } from "../../common/Buttons";
 import { InputCheckbox, InputForm } from "../../common/Inputs";
 import { BYCLogo } from "../../common/SVGIcons";
+import { useSelector } from "react-redux";
+import { getLanguage } from "../../../../redux/selectors/selectors";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../utils/hooks/reduxHooks/reduxHooks";
+import { setLanguage } from "../../../../redux/slices/languageSlice";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   // const [userCredentials, setUserCredentials] = useState({ userLogin: "", userPassword: ""})
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const currentLng = cookies.get("i18next");
   const navigate = useNavigate();
+  const dispacth = useAppDispatch();
 
   const { t, i18n } = useTranslation();
+
+  const currentLng = i18n.language;
 
   const defaultCredentials = {
     login: "root",
     pwd: "root",
   };
 
+  const langSelector = useAppSelector(getLanguage);
+
   const handleChangeLanguage = () => {
     if (currentLng === "en") {
       i18n.changeLanguage("fr");
+      dispacth(setLanguage(i18n.language));
     } else {
       i18n.changeLanguage("en");
+      dispacth(setLanguage(i18n.language));
     }
   };
 
@@ -89,7 +102,7 @@ export const ConnexionForm = () => {
             {t("#Login")}
           </PrimaryButton>
           <OutlinedButton width={"6rem"} onClick={handleChangeLanguage}>
-            {currentLng === "fr" ? t("#English") : t("#French")}
+            {langSelector === "fr" ? t("#English") : t("#French")}
           </OutlinedButton>
         </FormContainer>
       </ContainerWrapper>

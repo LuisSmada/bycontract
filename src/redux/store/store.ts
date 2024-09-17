@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import applicationStateReducer from "../slices/applicationStateSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    appliState: applicationStateReducer,
+  },
 });
 
 export type TByContractStore = ReturnType<typeof store.getState>;

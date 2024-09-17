@@ -50,8 +50,6 @@ const waveState = {
   disabled: false,
 };
 
-console.log(COLORS_BYCONTRACT);
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

@@ -10,7 +10,6 @@ interface IInputFormProps {
 }
 
 export const InputForm = (props: IInputFormProps) => {
-  console.log(props.value);
   switch (props.type) {
     case "text":
       return (
