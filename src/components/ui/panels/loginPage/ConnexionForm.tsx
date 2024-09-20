@@ -13,7 +13,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "../../../../utils/hooks/reduxHooks/reduxHooks";
-import { setLanguage } from "../../../../redux/slices/languageSlice";
+import { setLanguage } from "../../../../redux/slices/applicationSlices/languageSlice";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");

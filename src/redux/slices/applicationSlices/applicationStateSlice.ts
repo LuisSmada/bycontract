@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IApplicationState } from "../../core/model/entities";
+import { IApplicationState } from "../../../core/model/entities";
 import { languageInitialState, setLanguage } from "./languageSlice";
 
 const initialState: IApplicationState = {
