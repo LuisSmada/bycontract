@@ -1,11 +1,13 @@
 import { Button } from "antd";
 import { ReactNode } from "react";
-import styled from "styled-components";
+import styled, { CSSProperties } from "styled-components";
 
 interface ISimpleButtonProps {
   width: string;
   children: ReactNode;
   onClick?: () => void;
+  style?: CSSProperties;
+  [key: string]: any;
 }
 
 interface IPrimaryButtonProps extends ISimpleButtonProps {}
@@ -14,9 +16,17 @@ export const PrimaryButton = ({
   width,
   children,
   onClick,
+  style,
+  ...props
 }: IPrimaryButtonProps) => {
   return (
-    <ButtonPrimary width={width} onClick={onClick} type="primary">
+    <ButtonPrimary
+      style={style}
+      width={width}
+      onClick={onClick}
+      {...props}
+      type="primary"
+    >
       {children}
     </ButtonPrimary>
   );

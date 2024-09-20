@@ -21,6 +21,7 @@ declare module "styled-components" {
     textSize: {
       title: `${string}`;
       normalText: `${string}`;
+      buttonText: `${string}`;
     };
   }
 }

@@ -1,7 +1,10 @@
 {
+  "#AddNewDocument": "Ajouter un nouveau document",
   "#CompleteFields": "Compléter les champs",
   "#EmailOrUsername": "Email ou nom d'utilisateur",
   "#English": "Anglais",
+  "#File": "Fichier",
+  "#Folder": "Dossier",
   "#French": "Français",
   "#InvalidFields": "Champs invalides",
   "#Login": "Connexion",

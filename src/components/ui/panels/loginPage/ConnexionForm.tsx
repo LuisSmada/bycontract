@@ -153,7 +153,7 @@ const IndicationConnexion = styled.div`
   margin-bottom: 20px;
 `;
 
-const Label = styled.div`
+export const Label = styled.div`
   font-size: ${(props) => props.theme.textSize.normalText};
   font-weight: 500;
   color: ${(props) => props.theme.colors.mainText};

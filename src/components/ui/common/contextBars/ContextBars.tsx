@@ -1,19 +1,53 @@
 import { useTranslation } from "react-i18next";
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
 import { AddIcon } from "../SVGIcons";
+import { PrimaryButton } from "../Buttons";
+import { CSSProperties, useState } from "react";
+import { Modal } from "antd";
+import { ModalDocument } from "../modals/ModalDocument";
 
 export const DocumentContextBar = () => {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const ButtonSelectionCss = {
+    width: "100px",
+    height: "32px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    border: "none",
+    borderRadius: "5px",
+    fontSize: "12px", //Mettre ca sous forme de variable
+    padding: "0 10px",
+    fontWeight: "normal",
+  };
+
   return (
-    <Container>
-      <Wrapper>
-        <Title>{t("#MyDocuments")}</Title>
-        <ButtonSelection>
-          {t("#New")}
-          <AddIconStyle />
-        </ButtonSelection>
-      </Wrapper>
-    </Container>
+    <>
+      <Container>
+        <Wrapper>
+          <Title>{t("#MyDocuments")}</Title>
+          <PrimaryButton
+            width="100px"
+            style={ButtonSelectionCss}
+            onClick={openModal}
+          >
+            {t("#New")}
+            <AddIconStyle />
+          </PrimaryButton>
+        </Wrapper>
+      </Container>
+      <ModalDocument isModalOpen={isModalOpen} closeModal={closeModal} />
+    </>
   );
 };
 
@@ -39,7 +73,7 @@ const Title = styled.div`
   color: ${(props) => props.theme.textSize.normalText};
 `;
 
-const ButtonSelection = styled.button`
+const ButtonSelection = styled(PrimaryButton)`
   width: 100px;
   height: 28px;
   background-color: ${(props) => props.theme.colors.main};

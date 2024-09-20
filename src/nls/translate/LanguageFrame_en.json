@@ -1,7 +1,10 @@
 {
+  "#AddNewDocument": "Add a new document",
   "#CompleteFields": "Complete fields",
   "#EmailOrUsername": "Email or username",
   "#English": "English",
+  "#File": "File",
+  "#Folder": "Folder",
   "#French": "French",
   "#InvalidFields": "Invalids fields",
   "#Login": "Login",

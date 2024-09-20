@@ -20,6 +20,7 @@ export const COLORS_BYCONTRACT = {
   textSize: {
     title: "20px",
     normalText: "14px",
+    buttonText: "12px",
   },
 } as const satisfies DefaultTheme;
 
@@ -49,6 +50,10 @@ export const globalThemeAntd = {
       colorPrimaryHover: COLORS_BYCONTRACT.colors.main,
       colorPrimaryActive: COLORS_BYCONTRACT.colors.main,
       colorText: COLORS_BYCONTRACT.colors.mainText,
+    },
+    Modal: {
+      titleFontSize: COLORS_BYCONTRACT.textSize.normalText,
+      fontSize: COLORS_BYCONTRACT.textSize.buttonText,
     },
   },
 };
