@@ -3,6 +3,9 @@ import { IDashboardTabsListType } from "../../../../../types/DashboardTypes";
 import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ContextBar } from "../../../common/contextBars/ContextBars";
+import { useAppDispatch } from "../../../../../utils/hooks/reduxHooks/reduxHooks";
+import { setActiveTabStore } from "../../../../../redux/slices/applicationSlices/applicationStateSlice";
 
 interface IDashboardTabsProps {
   tabList: IDashboardTabsListType[];
@@ -12,6 +15,8 @@ export const DashboardTabs = ({ tabList }: IDashboardTabsProps) => {
   const [activeTab, setActiveTab] = useState<IDashboardTabsListType>(
     tabList[0]
   );
+
+  const dispatch = useAppDispatch();
 
   //! useSessionStorage is a temporary solution to store the current state in the locale storage
   //! It is a good method to save the state when i refresh the app
@@ -30,15 +35,20 @@ export const DashboardTabs = ({ tabList }: IDashboardTabsProps) => {
           <Tab
             key={idx}
             to={tab.path}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => {
+              setActiveTab(tab);
+              dispatch(setActiveTabStore(tab));
+            }}
             $isActive={isActiveTab(tab)}
           >
             {t(`${tab.title}`)}
           </Tab>
         ))}
       </TabContainer>
-      <Panel id="authoringPanel">
-        <Outlet />
+      <Panel>
+        <InnerDashboard id="inner-dashboard">
+          <Outlet />
+        </InnerDashboard>
       </Panel>
     </Container>
   );
@@ -86,6 +96,12 @@ const Tab = styled(Link)<ITab>`
 `;
 
 const Panel = styled.div`
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const InnerDashboard = styled.div`
   width: 100%;
   height: 100%;
 `;

@@ -3,6 +3,8 @@ import { IDashboardTabsListType } from "../../../../types/DashboardTypes";
 import { DashboardTabs } from "./tabNavigation/DashboardTabs";
 import { Badge } from "../../common/Badge";
 import { BYCWhiteLogo } from "../../common/SVGIcons";
+import { useAppDispatch } from "../../../../utils/hooks/reduxHooks/reduxHooks";
+import { setCurrentUser } from "../../../../redux/slices/applicationSlices/applicationStateSlice";
 
 export const dashboardTabsList: IDashboardTabsListType[] = [
   {
@@ -21,9 +23,12 @@ export const dashboardTabsList: IDashboardTabsListType[] = [
 
 export const Dashboard = () => {
   // const [defaultUserName, setDefaultUserName] = useState<string>("Adams AYO");
+
+  const dispatch = useAppDispatch();
   const defaultUserName = "Adams AYO";
+  dispatch(setCurrentUser(defaultUserName));
   return (
-    <Container>
+    <Container id="window-container">
       <HeaderBar>
         <LogoContainer>
           <Logo src={BYCWhiteLogo} alt="BYC white logo" />
@@ -33,9 +38,11 @@ export const Dashboard = () => {
           <Badge userName={defaultUserName} isPointer={true} />
         </UserInfoContainer>
       </HeaderBar>
-      <NavbarHeader>
-        <DashboardTabs tabList={dashboardTabsList} />
-      </NavbarHeader>
+      <AuthoringPanel id="authoringPanel">
+        <NavbarHeader>
+          <DashboardTabs tabList={dashboardTabsList} />
+        </NavbarHeader>
+      </AuthoringPanel>
     </Container>
   );
 };
@@ -84,4 +91,10 @@ const NavbarHeader = styled.div`
   background-color: #fff;
   box-shadow: ${(props) => `0px -1px 10px ${props.theme.colors.disabled}`};
   display: flex;
+`;
+
+const AuthoringPanel = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 `;

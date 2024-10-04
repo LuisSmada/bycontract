@@ -4,3 +4,5 @@ export { default as BYCWhiteLogo } from "../../../assets/icons/BYC_white.svg";
 
 export { default as AddIcon } from "../../../assets/icons/add.svg?react";
 export { default as CloseIcon } from "../../../assets/icons/close.svg?react";
+export { default as FileIcon } from "../../../assets/icons/file.svg?react";
+export { default as FolderIcon } from "../../../assets/icons/folder.svg?react";

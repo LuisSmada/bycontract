@@ -1,16 +1,19 @@
 import moment from "moment";
 import { IFile } from "../../../core/model/entities";
 import { createSlice } from "@reduxjs/toolkit";
+import { momentDateFormat, uniqueId } from "../../../utils/generics";
+
+const idFile1 = uniqueId();
 
 export const fileInitialState: IFile = {
   byId: {
-    "0": {
-      id: "0",
+    [idFile1]: {
+      id: idFile1,
       type: "file",
-      name: "First folder",
+      name: "First file",
       path: "/",
       size: 10,
-      date: moment().format("DD-MM-YYYY"),
+      date: moment().format(momentDateFormat),
       creatorName: "Adams AYO",
       parentPath: null,
       parentID: null,

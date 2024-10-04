@@ -5,10 +5,17 @@ import { PrimaryButton } from "../Buttons";
 import { CSSProperties, useState } from "react";
 import { Modal } from "antd";
 import { ModalDocument } from "../modals/ModalDocument";
+import { useAppDispatch } from "../../../../utils/hooks/reduxHooks/reduxHooks";
+import { addFolder } from "../../../../redux/slices/entitiesSlices/folderSlice";
+
+export const ContextBar = () => {
+  return <Container></Container>;
+};
 
 export const DocumentContextBar = () => {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispacth = useAppDispatch();
 
   const openModal = () => {
     setIsModalOpen(true);

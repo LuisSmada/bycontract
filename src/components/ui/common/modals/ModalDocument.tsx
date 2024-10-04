@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { AddIcon } from "../SVGIcons";
 import { Label } from "../../panels/loginPage/ConnexionForm";
 import { InputForm } from "../Inputs";
+import { useAppDispatch } from "../../../../utils/hooks/reduxHooks/reduxHooks";
+import { addFolder } from "../../../../redux/slices/entitiesSlices/folderSlice";
 
 interface IModalDocumentProps {
   isModalOpen: boolean;
@@ -18,6 +20,18 @@ export const ModalDocument = (props: IModalDocumentProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [documentName, setDocumentName] = useState<string>("");
   const [typeDocument, setTypeDocument] = useState("");
+
+  const dispatch = useAppDispatch();
+
+  const addDocument = () => {
+    dispatch(
+      addFolder({
+        name: documentName,
+        size: 10,
+        path: "/",
+      })
+    );
+  };
 
   const options = [
     {
@@ -47,7 +61,9 @@ export const ModalDocument = (props: IModalDocumentProps) => {
         newLoading = false;
         return newLoading;
       });
-    }, 6000);
+    }, 2000);
+
+    addDocument();
   };
 
   return (
@@ -67,7 +83,7 @@ export const ModalDocument = (props: IModalDocumentProps) => {
               fontSize: "12px",
               width: "auto",
             }}
-            onClick={enterLoading}
+            onClick={addDocument}
           >
             <Wrapper>
               Add
