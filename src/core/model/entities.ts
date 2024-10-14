@@ -35,8 +35,8 @@ export interface IFileSystem {
   creatorName: string;
   date: string;
   name: string;
-  parentID?: string | null;
-  parentPath?: string | null;
+  parentID: string | null;
+  parentPath: string | null;
   path: string;
   size?: number;
 }
@@ -47,6 +47,7 @@ export interface IFolderItem extends IFileSystem {
 }
 export interface IFolder {
   byId: { [key: string]: IFolderItem };
+  allFolderIds: string[];
 }
 
 export interface IFileItem extends IFileSystem {
@@ -55,4 +56,5 @@ export interface IFileItem extends IFileSystem {
 
 export interface IFile {
   byId: { [key: string]: IFileItem };
+  allFileIds: string[];
 }

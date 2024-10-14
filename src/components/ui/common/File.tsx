@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FileIcon, FolderIcon } from "./SVGIcons";
+import { useNavigate } from "react-router-dom";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../utils/hooks/reduxHooks/reduxHooks";
+import { getCurrentFolderPathSelector } from "../../../redux/selectors/selectors";
+import { setCurrentPath } from "../../../redux/slices/applicationSlices/applicationStateSlice";
 
 interface IFile {
   id: string;
@@ -12,8 +19,25 @@ export const File = (props: IFile) => {
   const fileNameSplited: String[] = props.name.split(".");
   const ext: String = fileNameSplited.length === 2 ? fileNameSplited[1] : "txt";
 
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+  const pathFile = useAppSelector((state) =>
+    getCurrentFolderPathSelector(state, props.id)
+  );
+
+  console.log(pathFile);
+
+  const enterFolder = (e: React.MouseEvent<HTMLDivElement>) => {
+    dispatch(setCurrentPath(`/dashboard/tab:mydocuments/folder/${props.id}`));
+    navigate(`/dashboard/tab:mydocuments/folder/${props.id}`);
+  };
+
   return (
-    <Container id={`${props.type}-id-${props.id}`}>
+    <Container
+      id={`${props.type}-id-${props.id}`}
+      onDoubleClick={(e) => enterFolder(e)}
+    >
       <Logo>
         {props.type === "folder" ? <FolderIconStyled /> : <FileIconStyled />}
         {props.type === "file" ? <span>{`.${ext}`}</span> : ""}

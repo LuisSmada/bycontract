@@ -19,6 +19,7 @@ export const fileInitialState: IFile = {
       parentID: null,
     },
   },
+  allFileIds: [idFile1],
 };
 
 export const fileSlice = createSlice({

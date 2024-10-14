@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IEntities } from "../../../core/model/entities";
-import { addFolder, addFolderInit, folderInitialState } from "./folderSlice";
+import { addFolderInit, folderInitialState } from "./folderSlice";
 import { fileInitialState } from "./fileSlice";
 
 export const entitiesInitialState: IEntities = {
@@ -16,6 +16,7 @@ export const entitiesSlice = createSlice({
     builder.addCase(addFolderInit, (nextState, action) => {
       const newId = action.payload.id;
       nextState.folders.byId[newId] = action.payload;
+      nextState.folders.allFolderIds.push(newId);
     });
   },
 });

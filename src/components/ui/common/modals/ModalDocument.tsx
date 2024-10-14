@@ -28,7 +28,6 @@ export const ModalDocument = (props: IModalDocumentProps) => {
       addFolder({
         name: documentName,
         size: 10,
-        path: "/",
       })
     );
   };
