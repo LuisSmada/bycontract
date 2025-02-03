@@ -30,7 +30,10 @@ export type TLanguageApplication = "en" | "fr";
 export type UniqueID = string;
 
 type TFileSystemType = "folder" | "file";
-export interface IFileSystem {
+
+export type IFileSystemContent = IFolderItem | IFileItem;
+
+interface IGenericDocumentContent {
   id: UniqueID;
   creatorName: string;
   date: string;
@@ -41,16 +44,16 @@ export interface IFileSystem {
   size?: number;
 }
 
-export interface IFolderItem extends IFileSystem {
+export interface IFolderItem extends IGenericDocumentContent {
   type: "folder";
-  children?: (IFileItem | IFolderItem)[] | null;
+  children: { [key: string]: IFileItem | IFolderItem } | null;
 }
 export interface IFolder {
   byId: { [key: string]: IFolderItem };
   allFolderIds: string[];
 }
 
-export interface IFileItem extends IFileSystem {
+export interface IFileItem extends IGenericDocumentContent {
   type: "file";
 }
 

@@ -1,20 +1,34 @@
 import styled from "styled-components";
 import { IDashboardTabsListType } from "../../../../../types/DashboardTypes";
 import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContextBar } from "../../../common/contextBars/ContextBars";
-import { useAppDispatch } from "../../../../../utils/hooks/reduxHooks/reduxHooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../utils/hooks/reduxHooks/reduxHooks";
 import { setActiveTabStore } from "../../../../../redux/slices/applicationSlices/applicationStateSlice";
+import { getPathActiveTabSelector } from "../../../../../redux/selectors/selectors";
 
 interface IDashboardTabsProps {
   tabList: IDashboardTabsListType[];
 }
 
 export const DashboardTabs = ({ tabList }: IDashboardTabsProps) => {
-  const [activeTab, setActiveTab] = useState<IDashboardTabsListType>(
-    tabList[0]
+  const activeTabFromURL = tabList.find(
+    (tab) => tab.path === location.pathname
   );
+
+  const [activeTab, setActiveTab] = useState<IDashboardTabsListType>(
+    activeTabFromURL ?? tabList[0]
+  );
+
+  useEffect(() => {
+    if (!activeTabFromURL) {
+      location.pathname = activeTab.path;
+    }
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -23,7 +37,7 @@ export const DashboardTabs = ({ tabList }: IDashboardTabsProps) => {
 
   // const [activeTab, setActiveTab] = useSessionStorage("tabActive", tabList[0]);
   const isActiveTab = (tab: IDashboardTabsListType) => {
-    return activeTab.path === tab.path;
+    return activeTab === tab;
   };
 
   const { t } = useTranslation();

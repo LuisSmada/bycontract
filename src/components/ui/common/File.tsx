@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FileIcon, FolderIcon } from "./SVGIcons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useAppDispatch,
   useAppSelector,
@@ -19,6 +19,8 @@ export const File = (props: IFile) => {
   const fileNameSplited: String[] = props.name.split(".");
   const ext: String = fileNameSplited.length === 2 ? fileNameSplited[1] : "txt";
 
+  const { "*": pathParam } = useParams();
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -29,8 +31,13 @@ export const File = (props: IFile) => {
   console.log(pathFile);
 
   const enterFolder = (e: React.MouseEvent<HTMLDivElement>) => {
-    dispatch(setCurrentPath(`/dashboard/tab:mydocuments/folder/${props.id}`));
-    navigate(`/dashboard/tab:mydocuments/folder/${props.id}`);
+    const currentPath = pathParam ? `${pathParam}/` : "";
+    dispatch(
+      setCurrentPath(
+        `/dashboard/tab:mydocuments/folder/${currentPath}${props.id}`
+      )
+    );
+    navigate(`/dashboard/tab:mydocuments/folder/${currentPath}${props.id}`);
   };
 
   return (

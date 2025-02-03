@@ -6,7 +6,7 @@ import { PageNotFound } from "../components/ui/panels/pageNotFound/PageNotFound"
 import { MyWall } from "../components/ui/panels/homePage/navigation/MyWall";
 import { MyDocuments } from "../components/ui/panels/homePage/navigation/MyDocuments";
 import { Stats } from "../components/ui/panels/homePage/navigation/Stats";
-import { SubFolderPage } from "../components/ui/panels/homePage/navigation/SubFolderPage";
+// import { SubFolderPage } from "../components/ui/panels/homePage/navigation/SubFolderPage";
 import { DocumentViewPanel } from "../components/ui/panels/myDocumentsPage/DocumentViewPanel";
 
 export const AppRoutes = () => {
@@ -18,7 +18,7 @@ export const AppRoutes = () => {
         <Route path="tab:mywall" element={<MyWall />} />
         <Route path="tab:mydocuments" element={<MyDocuments />}>
           <Route index element={<DocumentViewPanel />} />
-          <Route path="folder/:documentId" element={<DocumentViewPanel />} />
+          <Route path="folder/*" element={<DocumentViewPanel />} />
         </Route>
         <Route path="tab:stats" element={<Stats />} />
       </Route>

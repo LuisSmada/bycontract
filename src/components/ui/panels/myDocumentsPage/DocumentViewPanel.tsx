@@ -3,17 +3,19 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector } from "../../../../utils/hooks/reduxHooks/reduxHooks";
 import {
-  getAllFileList,
-  getAllFolderList,
+  getAllFileListMemo,
+  getAllFolderListMemo,
   getFolderChildrenByFolderId,
 } from "../../../../redux/selectors/selectors";
 import { File } from "../../common/File";
 
 export const DocumentViewPanel = () => {
-  const { documentId } = useParams();
-  const parentId = documentId ? documentId : null;
-  const folderList = useAppSelector(getAllFolderList);
-  const fileList = useAppSelector(getAllFileList);
+  const { "*": pathParam } = useParams();
+  const documentIds = pathParam?.split("/") ?? [];
+  const parentId =
+    documentIds.length > 0 ? documentIds[documentIds.length - 1] : null;
+  const folderList = useAppSelector(getAllFolderListMemo);
+  const fileList = useAppSelector(getAllFileListMemo);
 
   const childrenById = useAppSelector((state) =>
     getFolderChildrenByFolderId(state, parentId)
@@ -26,7 +28,8 @@ export const DocumentViewPanel = () => {
   return (
     <Container>
       {parentId
-        ? childrenById?.map((children) => {
+        ? childrenById &&
+          Object.values(childrenById)?.map((children) => {
             return (
               <File
                 id={children.id}

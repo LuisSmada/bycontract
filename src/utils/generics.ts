@@ -9,6 +9,8 @@ export function assertsNonNullable<T>(
   }
 }
 
+export type Nullable<T> = T | null | undefined;
+
 let seed = Date.now();
 
 export const uniqueId = (): UniqueID => {

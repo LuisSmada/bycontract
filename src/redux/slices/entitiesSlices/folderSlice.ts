@@ -4,15 +4,17 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { momentDateFormat, uniqueId } from "../../../utils/generics";
 import { StoreTypeDispatch, TByContractStore } from "../../store/store";
 import {
+  getCurrentPathSelector,
   getCurrentUser,
-  getFolderIdByPathSelector,
-  getParentPathByIdSelector,
+  getFolderById,
+  getParentByIdSelector,
+  getParentIdByCurrentPathSelector,
   getPathActiveTabSelector,
 } from "../../selectors/selectors";
 
 const idFolder1 = uniqueId();
 const idFolder2 = uniqueId();
-const idFolder3 = uniqueId();
+export const idFolder3 = uniqueId();
 const idFile1 = uniqueId();
 
 export const folderInitialState: IFolder = {
@@ -21,36 +23,37 @@ export const folderInitialState: IFolder = {
       id: idFolder1,
       type: "folder",
       name: "First folder",
-      path: "/First folder",
+      path: `${idFolder1}`,
       size: 10,
       date: moment().format(momentDateFormat),
       creatorName: "Adams AYO",
       parentPath: "/",
       parentID: null,
-      children: [
-        {
+      children: {
+        [idFolder3]: {
           id: idFolder3,
           type: "folder",
           name: "First child folder",
-          path: "/First child folder",
+          path: `${idFolder3}`,
           size: 10,
           date: moment().format(momentDateFormat),
           creatorName: "Adams AYO",
           parentPath: "/",
           parentID: idFolder1,
+          children: null,
         },
-        {
+        [idFile1]: {
           id: idFile1,
           type: "file",
           name: "First child file",
-          path: "/First child file",
+          path: `${idFile1}`,
           size: 10,
           date: moment().format(momentDateFormat),
           creatorName: "Adams AYO",
           parentPath: "/",
           parentID: idFolder1,
         },
-      ],
+      },
     },
     [idFolder2]: {
       id: idFolder2,
@@ -62,7 +65,7 @@ export const folderInitialState: IFolder = {
       creatorName: "Adams AYO",
       parentPath: "/",
       parentID: null,
-      children: [],
+      children: null,
     },
   },
   allFolderIds: [idFolder1, idFolder2],
@@ -90,6 +93,17 @@ export const folderSlice = createSlice({
       const folderId = action.payload;
       delete state.byId[folderId];
     },
+    updateParentFolder: {
+      reducer: (state, action: PayloadAction<IFolderItem>) => {
+        const updatedFolder = action.payload;
+        state.byId[updatedFolder.id] = updatedFolder;
+      },
+      prepare: (updatedFolder: IFolderItem) => {
+        return {
+          payload: updatedFolder,
+        };
+      },
+    },
   },
 });
 
@@ -110,35 +124,48 @@ export const addFolder = (
     const newId = uniqueId();
     const user = getCurrentUser(getState());
     const activeTab = getPathActiveTabSelector(getState());
+    const currentPath = getCurrentPathSelector(getState());
     const parentPath =
-      activeTab === "/dashboard/tab:mydocuments"
-        ? "/"
-        : getParentPathByIdSelector(getState(), newId);
+      currentPath === "/dashboard/tab:mydocuments" ? "/" : currentPath;
     const parentID =
-      parentPath === "/"
-        ? null
-        : getFolderIdByPathSelector(getState(), parentPath);
+      currentPath === "/" ? null : getParentIdByCurrentPathSelector(getState());
     const path =
-      parentPath === "/"
-        ? `${parentPath}${folderData.name}`
-        : `${parentPath}/${folderData.name}`;
+      parentPath === "/" ? `${parentPath}${newId}` : `${parentPath}/${newId}`;
     const formattedDate = moment().format(momentDateFormat);
     const folderType: "folder" = "folder";
-    dispatch(
-      folderSlice.actions.addFolderInit({
-        ...folderData,
-        id: newId,
-        creatorName: user,
-        parentPath,
-        parentID,
-        path,
-        date: formattedDate,
-        type: folderType,
-        children: [],
-      })
-    );
+
+    console.log("parentID", parentID);
+    console.log("currentPath ", currentPath);
+
+    const currentFolder: IFolderItem = Object.assign({
+      ...folderData,
+      id: newId,
+      creatorName: user,
+      parentPath,
+      parentID,
+      path,
+      date: formattedDate,
+      type: folderType,
+      children: null,
+    });
+    if (parentID) {
+      const parentFolder = getFolderById(getState(), parentID);
+
+      if (parentFolder) {
+        const updatedParentFolder = {
+          ...parentFolder,
+          children: {
+            ...parentFolder.children,
+            [currentFolder.id]: currentFolder,
+          },
+        };
+        dispatch(folderSlice.actions.updateParentFolder(updatedParentFolder));
+      }
+    }
+    dispatch(folderSlice.actions.addFolderInit(currentFolder));
   };
 };
 
-export const { addFolderInit, deleteFolder } = folderSlice.actions;
+export const { addFolderInit, deleteFolder, updateParentFolder } =
+  folderSlice.actions;
 export default folderSlice.reducer;

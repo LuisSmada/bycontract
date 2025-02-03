@@ -1,8 +1,10 @@
+import { createSelector } from "@reduxjs/toolkit";
 import {
   IFileItem,
   IFolderItem,
   IGlobalState,
 } from "../../core/model/entities";
+import { idFolder3 } from "../slices/entitiesSlices/folderSlice";
 
 export const getLanguage = (state: IGlobalState): string => {
   return state.appliState.core.language;
@@ -12,17 +14,44 @@ export const getCurrentUser = (state: IGlobalState): string => {
   return state.appliState.core.currentUser;
 };
 
+//Recover the path in the navigator
+export const getCurrentPathSelector = (state: IGlobalState): string => {
+  return state.appliState.core.currentPath;
+};
+
+export const getParentIdByCurrentPathSelector = (
+  state: IGlobalState
+): string => {
+  const currentPath = getCurrentPathSelector(state);
+  const ids = currentPath.split("/");
+  return ids[ids.length - 1];
+};
+
 export const getAllFolderList = (state: IGlobalState): IFolderItem[] => {
   const folders = state.entities.folders.byId;
   const folderList = Object.values(folders);
   return folderList;
 };
 
+//! This first is a memoised selector using a selector already created
+//export getAllFolderListMemo = createSelector([getAllFolderList], (folderList) => folderList)
+
+//! this is a memoised selector completely created without any selector alreay created
+export const getAllFolderListMemo = createSelector(
+  (state: IGlobalState) => state.entities.folders.byId,
+  (folders) => Object.values(folders)
+);
+
 export const getAllFileList = (state: IGlobalState): IFileItem[] => {
   const files = state.entities.files.byId;
   const fileList = Object.values(files);
   return fileList;
 };
+
+export const getAllFileListMemo = createSelector(
+  (state: IGlobalState) => state.entities.files.byId,
+  (files) => Object.values(files)
+);
 
 export const getCurrentFolderPathSelector = (
   state: IGlobalState,
@@ -46,44 +75,44 @@ export const getPathActiveTabSelector = (state: IGlobalState) => {
   return path;
 };
 
-const find = (
+const findPath = (
   id: string,
-  byId: { [key: string]: IFolderItem | IFileItem }
-): IFolderItem | IFileItem | null => {
-  const currentItem = byId[id];
-  if (currentItem) {
-    return currentItem;
-  }
+  byId: { [key: string]: IFolderItem }
+): IFolderItem | null => {
+  for (const folder of Object.values(byId)) {
+    if (folder.children && folder.children[id]) {
+      return folder;
+    }
 
-  for (const elementId in byId) {
-    const element = byId[elementId];
-    if (
-      element.type === "folder" &&
-      element.children &&
-      element.children?.length > 0
-    ) {
-      for (const childId of element.children) {
-        const found = find(childId.id, byId);
-        if (found) {
-          return found;
+    if (folder.children) {
+      const folderChildren: { [key: string]: IFolderItem } = {};
+
+      for (const childId in folder.children) {
+        const child = folder.children[childId];
+        if (child.type === "folder") {
+          folderChildren[childId] = child as IFolderItem;
         }
       }
+
+      const foundParent = findPath(id, folderChildren);
+      if (foundParent) return foundParent;
     }
   }
+
   return null;
 };
 
-export const getParentPathByIdSelector = (state: IGlobalState, id: string) => {
-  const { folders, files } = state.entities;
-  const byId = { ...folders.byId, ...files.byId };
+export const getParentByIdSelector = (state: IGlobalState, id: string) => {
+  const { folders } = state.entities;
+  const byId = { ...folders.byId };
 
-  const element = find(id, byId); // Find the element recursively
+  const element = findPath(id, byId);
 
   if (!element) {
-    return "/";
+    return null;
   }
 
-  return element.parentPath || "/";
+  return element;
 };
 
 export const getFolderById = (

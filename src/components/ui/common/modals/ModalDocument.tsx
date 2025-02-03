@@ -8,6 +8,7 @@ import { Label } from "../../panels/loginPage/ConnexionForm";
 import { InputForm } from "../Inputs";
 import { useAppDispatch } from "../../../../utils/hooks/reduxHooks/reduxHooks";
 import { addFolder } from "../../../../redux/slices/entitiesSlices/folderSlice";
+import { addFile } from "../../../../redux/slices/entitiesSlices/fileSlice";
 
 interface IModalDocumentProps {
   isModalOpen: boolean;
@@ -19,17 +20,26 @@ export const ModalDocument = (props: IModalDocumentProps) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [documentName, setDocumentName] = useState<string>("");
-  const [typeDocument, setTypeDocument] = useState("");
+  const [typeDocument, setTypeDocument] = useState("folder");
 
   const dispatch = useAppDispatch();
 
   const addDocument = () => {
-    dispatch(
-      addFolder({
-        name: documentName,
-        size: 10,
-      })
-    );
+    if (typeDocument === "folder") {
+      dispatch(
+        addFolder({
+          name: documentName,
+          size: 10,
+        })
+      );
+    } else if (typeDocument === "file") {
+      dispatch(
+        addFile({
+          name: documentName,
+          size: 10,
+        })
+      );
+    }
   };
 
   const options = [
@@ -60,7 +70,9 @@ export const ModalDocument = (props: IModalDocumentProps) => {
         newLoading = false;
         return newLoading;
       });
-    }, 2000);
+      props.closeModal();
+      setDocumentName("");
+    }, 1000);
 
     addDocument();
   };
@@ -82,7 +94,7 @@ export const ModalDocument = (props: IModalDocumentProps) => {
               fontSize: "12px",
               width: "auto",
             }}
-            onClick={addDocument}
+            onClick={enterLoading}
           >
             <Wrapper>
               Add
