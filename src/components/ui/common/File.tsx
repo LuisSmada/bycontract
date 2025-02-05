@@ -28,6 +28,17 @@ export const File = (props: IFile) => {
     getCurrentFolderPathSelector(state, props.id)
   );
 
+  const handleRightClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent> | MouseEvent
+  ) => {
+    e.preventDefault();
+    console.log("Right click");
+  };
+
+  document.addEventListener("contextmenu", (event: MouseEvent) =>
+    handleRightClick(event)
+  );
+
   console.log(pathFile);
 
   const enterFolder = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -44,6 +55,7 @@ export const File = (props: IFile) => {
     <Container
       id={`${props.type}-id-${props.id}`}
       onDoubleClick={(e) => enterFolder(e)}
+      onMouseDown={(e) => handleRightClick(e)}
     >
       <Logo>
         {props.type === "folder" ? <FolderIconStyled /> : <FileIconStyled />}
