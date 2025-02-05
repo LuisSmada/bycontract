@@ -1,11 +1,11 @@
 import cookies from "js-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { openNotification } from "../../../../utils/notifications";
 import { OutlinedButton, PrimaryButton } from "../../common/Buttons";
-import { InputCheckbox, InputForm } from "../../common/Inputs";
+import { InputCheckbox, InputForm, TInputFormType } from "../../common/Inputs";
 import { BYCLogo } from "../../common/SVGIcons";
 import { useSelector } from "react-redux";
 import { getLanguage } from "../../../../redux/selectors/selectors";
@@ -14,12 +14,17 @@ import {
   useAppSelector,
 } from "../../../../utils/hooks/reduxHooks/reduxHooks";
 import { setLanguage } from "../../../../redux/slices/applicationSlices/languageSlice";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import UserServices from "../../../../service/api/UserServices";
+import FileServices from "../../../../service/api/FileServices";
 
 export const ConnexionForm = () => {
   const [userLogin, setUserLogin] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   // const [userCredentials, setUserCredentials] = useState({ userLogin: "", userPassword: ""})
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [fieldStatus, setFieldStatus] = useState<TInputFormType>("");
+
   const navigate = useNavigate();
   const dispacth = useAppDispatch();
 
@@ -46,27 +51,44 @@ export const ConnexionForm = () => {
 
   const handleLogin = () => {
     if (!userLogin || !userPassword) {
-      openNotification({
-        type: "error",
-        message: t("#CompleteFields"),
-        description: t("#YouMustCompleteAllTheFields"),
+      toast.error(t("#YouMustCompleteAllTheFields"), {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
       });
+      setFieldStatus("error");
     } else if (
       userLogin !== defaultCredentials.login ||
       userPassword !== defaultCredentials.pwd
     ) {
-      openNotification({
-        type: "error",
-        message: t("#InvalidFields"),
-        description: t("#OneOrManyFieldsAreInvalids"),
+      toast.error(t("#OneOrManyFieldsAreInvalids"), {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
       });
+      setFieldStatus("error");
     } else {
-      // openNotification({
-      //   type: "success",
-      //   message: "Login sucess",
-      //   description: "Login success",
-      // });
       navigate("/dashboard/tab:mywall");
+      toast.success("Login successfully", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
     }
   };
 
@@ -84,12 +106,14 @@ export const ConnexionForm = () => {
             type="text"
             value={userLogin}
             onChange={(e) => setUserLogin(e.target.value)}
+            status={fieldStatus}
           />
           <Label>{t("#Password")}</Label>
           <InputForm
             type="password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
+            status={fieldStatus}
           />
           <RememberMeWrapper>
             <InputCheckbox

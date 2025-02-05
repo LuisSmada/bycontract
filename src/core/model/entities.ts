@@ -16,6 +16,21 @@ export interface ICoreApplicationState {
   currentPath: string;
 }
 
+export interface IUser {
+  idUser: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 export interface IEntities {
   files: IFile;
   folders: IFolder;
@@ -34,9 +49,9 @@ type TFileSystemType = "folder" | "file";
 export type IFileSystemContent = IFolderItem | IFileItem;
 
 interface IGenericDocumentContent {
-  id: UniqueID;
   creatorName: string;
-  date: string;
+  createdAt: string;
+  id: UniqueID;
   name: string;
   parentID: string | null;
   parentPath: string | null;

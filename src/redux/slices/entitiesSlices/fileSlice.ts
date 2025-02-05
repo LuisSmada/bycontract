@@ -23,7 +23,7 @@ export const fileInitialState: IFile = {
       name: "First file",
       path: `${idFile1}`,
       size: 10,
-      date: moment().format(momentDateFormat),
+      createdAt: moment().format(momentDateFormat),
       creatorName: "Adams AYO",
       parentPath: null,
       parentID: null,
@@ -60,7 +60,13 @@ export const fileSlice = createSlice({
 export const addFile = (
   fileData: Omit<
     IFileItem,
-    "id" | "date" | "type" | "creatorName" | "parentID" | "parentPath" | "path"
+    | "id"
+    | "createdAt"
+    | "type"
+    | "creatorName"
+    | "parentID"
+    | "parentPath"
+    | "path"
   >
 ) => {
   return (dispatch: StoreTypeDispatch, getState: () => TByContractStore) => {
@@ -83,7 +89,7 @@ export const addFile = (
       parentPath,
       parentID,
       path,
-      date: formattedDate,
+      createdAt: formattedDate,
       type: "file",
     });
     if (parentID) {

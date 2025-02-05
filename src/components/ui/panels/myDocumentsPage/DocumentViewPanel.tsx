@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAppSelector } from "../../../../utils/hooks/reduxHooks/reduxHooks";
@@ -8,9 +8,23 @@ import {
   getFolderChildrenByFolderId,
 } from "../../../../redux/selectors/selectors";
 import { File } from "../../common/File";
+import {
+  IFileItem,
+  IFolder,
+  IFolderItem,
+} from "../../../../core/model/entities";
+import { Drawer } from "../../common/Drawer";
+import UserServices from "../../../../service/api/UserServices";
+import { c } from "vite/dist/node/types.d-aGj9QkWt";
 
 export const DocumentViewPanel = () => {
   const { "*": pathParam } = useParams();
+
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+  const [selectedDocument, setSelectedDocument] = useState<
+    IFolderItem | IFileItem | null
+  >(null);
+
   const documentIds = pathParam?.split("/") ?? [];
   const parentId =
     documentIds.length > 0 ? documentIds[documentIds.length - 1] : null;
@@ -25,6 +39,26 @@ export const DocumentViewPanel = () => {
 
   const highFiles = allFilesList.filter((file) => file.parentID === null);
 
+  const handleRightClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent> | MouseEvent,
+    document: IFolderItem | IFileItem
+  ) => {
+    e.preventDefault();
+    console.log("Right click");
+    setOpenDrawer(true);
+    setSelectedDocument(document);
+  };
+
+  // document.addEventListener("contextmenu", (event: MouseEvent) =>
+  //   handleRightClick(event)
+  // );
+
+  const isChildrenByIdExistsFc = (): boolean => {
+    return childrenById !== null && childrenById !== undefined;
+  };
+
+  const isChildrenByIdExists = isChildrenByIdExistsFc();
+
   return (
     <Container>
       {parentId
@@ -36,6 +70,7 @@ export const DocumentViewPanel = () => {
                 key={children.id}
                 type={children.type}
                 name={children.name}
+                onRightClick={(e) => handleRightClick(e, children)}
               />
             );
           })
@@ -46,24 +81,18 @@ export const DocumentViewPanel = () => {
                 key={children.id}
                 type={children.type}
                 name={children.name}
+                onRightClick={(e) => handleRightClick(e, children)}
               />
             );
           })}
-      {/* {folderList.map((folder) => {
-        return (
-          <File
-            id={folder.id}
-            key={folder.id}
-            type={folder.type}
-            name={folder.name}
-          />
-        );
-      })}
-      {fileList.map((list) => {
-        return (
-          <File id={list.id} key={list.id} type={list.type} name={list.name} />
-        );
-      })} */}
+
+      {selectedDocument && (
+        <Drawer
+          openDrawer={openDrawer}
+          setOpenDrawer={setOpenDrawer}
+          file={selectedDocument}
+        />
+      )}
     </Container>
   );
 };

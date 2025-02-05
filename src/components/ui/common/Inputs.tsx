@@ -7,7 +7,10 @@ interface IInputFormProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
+  status?: TInputFormType;
 }
+
+export type TInputFormType = "" | "warning" | "error" | undefined;
 
 export const InputForm = (props: IInputFormProps) => {
   switch (props.type) {
@@ -17,6 +20,7 @@ export const InputForm = (props: IInputFormProps) => {
           value={props.value}
           onChange={props.onChange}
           prefix={props.prefix}
+          status={props.status}
         />
       );
     case "password":
@@ -25,6 +29,7 @@ export const InputForm = (props: IInputFormProps) => {
           value={props.value}
           onChange={props.onChange}
           prefix={props.prefix}
+          status={props.status}
         />
       );
   }
