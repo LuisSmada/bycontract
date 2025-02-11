@@ -8,6 +8,7 @@ import {
 } from "../../../utils/hooks/reduxHooks/reduxHooks";
 import { getCurrentFolderPathSelector } from "../../../redux/selectors/selectors";
 import { setCurrentPath } from "../../../redux/slices/applicationSlices/applicationStateSlice";
+import { Drawer } from "./Drawer";
 
 interface IFile {
   id: string;
@@ -21,6 +22,8 @@ export const File = (props: IFile) => {
 
   const { "*": pathParam } = useParams();
 
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -33,6 +36,7 @@ export const File = (props: IFile) => {
   ) => {
     e.preventDefault();
     console.log("Right click");
+    setOpenDrawer(true);
   };
 
   document.addEventListener("contextmenu", (event: MouseEvent) =>
@@ -52,17 +56,20 @@ export const File = (props: IFile) => {
   };
 
   return (
-    <Container
-      id={`${props.type}-id-${props.id}`}
-      onDoubleClick={(e) => enterFolder(e)}
-      onMouseDown={(e) => handleRightClick(e)}
-    >
-      <Logo>
-        {props.type === "folder" ? <FolderIconStyled /> : <FileIconStyled />}
-        {props.type === "file" ? <span>{`.${ext}`}</span> : ""}
-      </Logo>
-      <Name>{props.name}</Name>
-    </Container>
+    <>
+      <Container
+        id={`${props.type}-id-${props.id}`}
+        onDoubleClick={(e) => enterFolder(e)}
+        onMouseDown={(e) => handleRightClick(e)}
+      >
+        <Logo>
+          {props.type === "folder" ? <FolderIconStyled /> : <FileIconStyled />}
+          {props.type === "file" ? <span>{`.${ext}`}</span> : ""}
+        </Logo>
+        <Name>{props.name}</Name>
+      </Container>
+      {/* <Drawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} /> */}
+    </>
   );
 };
 
