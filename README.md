@@ -1,3 +1,21 @@
+# Docker commands
+
+Build Docker app
+
+`docker build -t bycontract .`
+
+Start Docker in local development
+
+`docker run --name byc_front_container -p 3000:3000 bycontract`
+
+Stop container
+
+`docker stop byc_front_container`
+
+# Start storybook
+
+`yarn storybook`
+
 # Getting Started with BYCONTRACT App
 
 This project use Vite as environment
