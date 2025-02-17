@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Drawer as DrawerElement } from "antd";
 import { IFileItem, IFolderItem } from "../../../core/model/entities";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 interface IDrawerProps {
   openDrawer: boolean;
@@ -13,17 +15,38 @@ export const Drawer = (props: IDrawerProps) => {
     props.setOpenDrawer(false);
   };
 
+  const { t } = useTranslation();
+
   return (
     <>
       <DrawerElement
-        title={props.file.name}
+        title={t("#Informations")}
         onClose={onClose}
         open={props.openDrawer}
+        className="authoringPanel"
+        mask={false}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <Title>Name</Title>
+        <DataInfo>{props.file.name}</DataInfo>
+        <Title>Creator name</Title>
+        <DataInfo>{props.file.creatorName}</DataInfo>
+        <Title>Created at</Title>
+        <DataInfo>{props.file.date}</DataInfo>
+        <Title>Type</Title>
+        <DataInfo>{props.file.type}</DataInfo>
+        <Title>Size</Title>
+        <DataInfo>{props.file.size}</DataInfo>
       </DrawerElement>
     </>
   );
 };
+
+const Title = styled.div`
+  font-weight: 600;
+  margin-bottom: 10px;
+`;
+
+const DataInfo = styled.div`
+  font-size: ${(props) => props.theme.textSize.normalText};
+  margin-bottom: 10px;
+`;

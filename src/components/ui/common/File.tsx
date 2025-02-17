@@ -199,8 +199,9 @@ const Name = styled.div`
 const ContextMenuContainer = styled.div`
   width: auto;
   height: auto;
-  border: ${(props) => `1px solid ${props.theme.colors.borderField}`};
+  //border: ${(props) => `1px solid ${props.theme.colors.borderField}`};
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  border: none;
 `;
 
 const ContextMenuButton = styled.div`
