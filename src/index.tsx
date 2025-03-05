@@ -16,6 +16,7 @@ import HttpApi from "i18next-http-backend";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import global_en from "./nls/translate/LanguageFrame_en.json";
 import global_fr from "./nls/translate/LanguageFrame_fr.json";
+import { ToastContainer } from "react-toastify";
 
 i18next
   .use(initReactI18next)
@@ -61,6 +62,7 @@ root.render(
           <ConfigProvider wave={waveState} theme={globalThemeAntd}>
             <FontStyles />
             <App />
+            <ToastContainer />
           </ConfigProvider>
         </I18nextProvider>
       </ThemeProvider>

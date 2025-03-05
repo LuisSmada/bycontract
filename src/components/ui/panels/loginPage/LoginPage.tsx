@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import HomeImage from "../../../../assets/illustrations/homemeeting.png";
 import { ConnexionForm } from "./ConnexionForm";
 import { motion } from "framer-motion";
 import { BYCONTRACTLogo } from "../../common/SVGIcons";
+import UserServices from "../../../../service/api/UserServices";
+import { error } from "console";
 
 export const LoginPage = () => {
   return (

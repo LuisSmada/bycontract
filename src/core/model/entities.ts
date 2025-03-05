@@ -16,6 +16,21 @@ export interface ICoreApplicationState {
   currentPath: string;
 }
 
+export interface IUser {
+  idUser: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 export interface IEntities {
   files: IFile;
   folders: IFolder;
