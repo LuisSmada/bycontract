@@ -25,7 +25,7 @@ export const folderInitialState: IFolder = {
       name: "First folder",
       path: `${idFolder1}`,
       size: 10,
-      date: moment().format(momentDateFormat),
+      createdAt: moment().format(momentDateFormat),
       creatorName: "Adams AYO",
       parentPath: "/",
       parentID: null,
@@ -36,7 +36,7 @@ export const folderInitialState: IFolder = {
           name: "First child folder",
           path: `${idFolder3}`,
           size: 10,
-          date: moment().format(momentDateFormat),
+          createdAt: moment().format(momentDateFormat),
           creatorName: "Adams AYO",
           parentPath: "/",
           parentID: idFolder1,
@@ -48,7 +48,7 @@ export const folderInitialState: IFolder = {
           name: "First child file",
           path: `${idFile1}`,
           size: 10,
-          date: moment().format(momentDateFormat),
+          createdAt: moment().format(momentDateFormat),
           creatorName: "Adams AYO",
           parentPath: "/",
           parentID: idFolder1,
@@ -61,7 +61,7 @@ export const folderInitialState: IFolder = {
       name: "Second folder",
       path: "/Second folder",
       size: 10,
-      date: moment().format(momentDateFormat),
+      createdAt: moment().format(momentDateFormat),
       creatorName: "Adams AYO",
       parentPath: "/",
       parentID: null,
@@ -111,7 +111,7 @@ export const addFolder = (
   folderData: Omit<
     IFolderItem,
     | "id"
-    | "date"
+    | "createdAt"
     | "type"
     | "creatorName"
     | "children"
@@ -144,7 +144,7 @@ export const addFolder = (
       parentPath,
       parentID,
       path,
-      date: formattedDate,
+      createdAt: formattedDate,
       type: folderType,
       children: null,
     });

@@ -31,7 +31,7 @@ export const Drawer = (props: IDrawerProps) => {
         <Title>Creator name</Title>
         <DataInfo>{props.file.creatorName}</DataInfo>
         <Title>Created at</Title>
-        <DataInfo>{props.file.date}</DataInfo>
+        <DataInfo>{props.file.createdAt}</DataInfo>
         <Title>Type</Title>
         <DataInfo>{props.file.type}</DataInfo>
         <Title>Size</Title>

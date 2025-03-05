@@ -102,7 +102,7 @@ export const File = (props: IFile) => {
   return (
     <>
       <Container
-        isContextMenuOpen={isContextMenuOpen}
+        $isContextMenuOpen={isContextMenuOpen}
         id={`${props.type}-id-${props.id}`}
         onDoubleClick={(e) => enterFolder(e)}
         onContextMenu={(e) => {
@@ -143,7 +143,7 @@ export const File = (props: IFile) => {
 };
 
 interface IContainer {
-  isContextMenuOpen: boolean;
+  $isContextMenuOpen: boolean;
 }
 
 const Container = styled.div<IContainer>`
@@ -158,7 +158,7 @@ const Container = styled.div<IContainer>`
   padding: 8px 7px 10px 10px;
   border-radius: 8px;
   background: ${(props) =>
-    props.isContextMenuOpen ? `rgba(116, 64, 239, 0.2)` : ""};
+    props.$isContextMenuOpen ? `rgba(116, 64, 239, 0.2)` : ""};
   transition: background 230ms ease-in;
   &:hover {
     background: rgba(116, 64, 239, 0.2);

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { openNotification } from "../../../../utils/notifications";
 import { OutlinedButton, PrimaryButton } from "../../common/Buttons";
-import { InputCheckbox, InputForm } from "../../common/Inputs";
+import { InputCheckbox, InputForm, TInputFormType } from "../../common/Inputs";
 import { BYCLogo } from "../../common/SVGIcons";
 import { useSelector } from "react-redux";
 import { getLanguage } from "../../../../redux/selectors/selectors";
@@ -20,6 +20,8 @@ export const ConnexionForm = () => {
   const [userPassword, setUserPassword] = useState<string>("");
   // const [userCredentials, setUserCredentials] = useState({ userLogin: "", userPassword: ""})
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [fieldStatus, setFieldStatus] = useState<TInputFormType>("");
+
   const navigate = useNavigate();
   const dispacth = useAppDispatch();
 
@@ -51,6 +53,7 @@ export const ConnexionForm = () => {
         message: t("#CompleteFields"),
         description: t("#YouMustCompleteAllTheFields"),
       });
+      setFieldStatus("error");
     } else if (
       userLogin !== defaultCredentials.login ||
       userPassword !== defaultCredentials.pwd
@@ -60,6 +63,7 @@ export const ConnexionForm = () => {
         message: t("#InvalidFields"),
         description: t("#OneOrManyFieldsAreInvalids"),
       });
+      setFieldStatus("error");
     } else {
       // openNotification({
       //   type: "success",
@@ -69,7 +73,7 @@ export const ConnexionForm = () => {
       navigate("/dashboard/tab:mywall");
     }
   };
-
+  console.log(fieldStatus);
   return (
     <Container>
       <ContainerWrapper>
@@ -84,12 +88,14 @@ export const ConnexionForm = () => {
             type="text"
             value={userLogin}
             onChange={(e) => setUserLogin(e.target.value)}
+            status={fieldStatus}
           />
           <Label>{t("#Password")}</Label>
           <InputForm
             type="password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
+            status={fieldStatus}
           />
           <RememberMeWrapper>
             <InputCheckbox
